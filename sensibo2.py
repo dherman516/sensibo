@@ -52,9 +52,12 @@ if __name__ == "__main__":
     timestamp  = time.asctime( time.localtime(time.time()) )
    
    
-    parser = argparse.ArgumentParser(description='Sensibo client example parser')
-    parser.add_argument('apikey', type = str)
-    parser.add_argument('deviceName', type = str)
+    parser = argparse.ArgumentParser(description='Sensibo client parser')
+    parser.add_argument('apikey', type = str, help='Request an API Key from home.sensibo.com')
+    parser.add_argument('deviceName', type = str, help='Your sensibo device name from home.sensibo.com')
+    parser.add_argument('cityName', type = str, help='Name of the city you live in', default='Modiin')	
+    parser.add_argument('offset', type = type=int, help='number of degrees C offset from ambient to use', default=0)
+
     args = parser.parse_args()
 
     f = open("/tmp/sensibo.log","a+")
@@ -74,12 +77,12 @@ if __name__ == "__main__":
 #    print ac_state
 #    print(json.dumps(ac_state, indent=4, sort_keys=True))
 #    client.pod_change_ac_state(uid, ac_state, "on", not ac_state['on'])
-    print ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
-    r = requests.get('http://wttr.in/Modiin?format=%t')
+#    Sensibo moved nativeTargetTemperature out of the acstate structure into device/acstate
+#    print ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
+    r = requests.get('http://wttr.in/' + cityName + '?format=%t')
     s = r.text[1:-3]
-    celsius = float(s)
-    fahrenheit = (celsius * 9/5) + 32
-#    print  ac_state['result'][0]['device']['measurements']
+    outsideTemp = float(s)
+#    fahrenheit = (outsideTemp * 9/5) + 32
 
     targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
     sensibotemp= ac_state['result'][0]['device']['measurements']['temperature']
@@ -89,46 +92,46 @@ if __name__ == "__main__":
     f.write ("--------Temps---------\n")
     f.write ("Target Temp: {}\n".format(targettemp))
     f.write ("Sensibo Power On: {} Temp: {} State: {}  Fan: {}\n".format(power,sensibotemp,sensibomode,fanlevel))
-    f.write ("Outside Temp: {}C /{}F\n".format(celsius,fahrenheit))
+    f.write ("Outside Temp: {}C /{}F\n".format(outsideTemp,fahrenheit))
     f.write ("--------Analysis---------\n")
     
     #climate react logic
-    if (False == power) and (celsius >= targettemp ) and (sensibotemp > targettemp +5 ) and ("cool" == sensibomode):
-        print "Clmate react Cooling: Outside air {} lower than target {} temp".format(celsius,targettemp)
+    if (False == power) and (outsideTemp >= targettemp ) and (sensibotemp > targettemp + offset ) and ("cool" == sensibomode):
+        print "Clmate react Cooling: Outside air {} lower than target {} temp plus offset {}".format(outsideTemp,targettemp,offset)
         f.write ("Turning On AC\n")
         client.pod_change_ac_state(uid, ac_state, "on", True)
 	
 	#regular logic for fan control
     if ("cool" == sensibomode) :
-      if (celsius + 5 < targettemp  ):
-        print "Cooling: Outside air {} lower than target {} temp".format(celsius,targettemp)
+      if (outsideTemp + offset < targettemp  ):
+        print "Cooling: Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp)
         f.write ("Turning Off AC\n")
         client.pod_change_ac_state(uid, ac_state, "on", False)
       else:
-        print "Cooling: Outside air {} higher than target {} temp".format(celsius,targettemp)
+        print "Cooling: Outside air {} plus offset {}  higher than target {} temp".format(outsideTemp,offset,targettemp)
         f.write ("Keep Cooling\n")
       if ("high" <> fanlevel) :
-           if (sensibotemp > targettemp + 1) :
+           if (sensibotemp > targettemp) :
              print "Fan is not high, Interior temp {} too high raising fan".format(sensibotemp)
              client.pod_change_ac_state(uid, ac_state, "fanLevel", "high")
              f.write ("Kicking up fan\n")
     else:  #Heating Mode
-      if (celsius > targettemp) :
-        print "Heating: Outside air {} higher than target {} temp".format(celsius,targettemp)
+      if (outsideTemp > targettemp) :
+        print "Heating: Outside air {} higher than target {} temp".format(outsideTemp,targettemp)
         client.pod_change_ac_state(uid, ac_state, "on", False)
         f.write ("Turning Off Heat\n")
       else:
-        print "Heating: Outside air {} lower than target {} temp".format(celsius,targettemp)
+        print "Heating: Outside air {} lower than target {} temp".format(outsideTemp,targettemp)
         f.write ("Keep Heating\n")
       if ("high" <> fanlevel) :
-           if (sensibotemp < targettemp - 1) :
+           if (sensibotemp < targettemp ) :
              print "Fan is not high, Interior temp {} too low raising fan".format(sensibotemp)
              client.pod_change_ac_state(uid, ac_state, "fanLevel", "high")
              f.write ("Kicking up fan\n")
-    if (celsius < sensibotemp) :
-      print "Inside {} hotter than Outside {}".format(sensibotemp,celsius)
+    if (outsideTemp < sensibotemp) :
+      print "Inside {} hotter than Outside {}".format(sensibotemp,outsideTemp)
     else:
-      print "Outside {} hotter than Inside {}".format(celsius,sensibotemp)
+      print "Outside {} hotter than Inside {}".format(outsideTemp,sensibotemp)
     if (sensibotemp == targettemp) :
         print "Target Temp {} reached. Reducing Fan".format(targettemp)
         client.pod_change_ac_state(uid, ac_state, "fanLevel", "low")
