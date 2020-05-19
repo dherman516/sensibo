@@ -1,3 +1,5 @@
+#Sample code to grab local weather (temp) and print it out
+
 import requests
 r = requests.get('http://wttr.in/Modiin?format=%t')
 print r.text
