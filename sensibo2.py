@@ -59,6 +59,8 @@ if __name__ == "__main__":
     parser.add_argument('offset', type = int, help='number of degrees C offset from ambient to use', default=0)
 
     args = parser.parse_args()
+    offset=args.offset
+    cityName=args.cityName
 
     f = open("/tmp/sensibo.log","a+")
     f.write(timestamp + "\n")
@@ -82,7 +84,7 @@ if __name__ == "__main__":
     r = requests.get('http://wttr.in/' + cityName + '?format=%t')
     s = r.text[1:-3]
     outsideTemp = float(s)
-#    fahrenheit = (outsideTemp * 9/5) + 32
+    fahrenheit = (outsideTemp * 9/5) + 32
 
     targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
     sensibotemp= ac_state['result'][0]['device']['measurements']['temperature']
