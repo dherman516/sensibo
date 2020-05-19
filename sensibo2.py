@@ -98,38 +98,37 @@ if __name__ == "__main__":
     f.write ("--------Analysis---------\n")
     
     #climate react logic
-    if (False == power) and (outsideTemp >= targettemp ) and (sensibotemp > targettemp + offset ) and ("cool" == sensibomode):
-        print "Clmate react Cooling: Outside air {} lower than target {} temp plus offset {}".format(outsideTemp,targettemp,offset)
-        f.write ("Turning On AC\n")
+    if (False == power) and (outsideTemp > targettemp ) and (sensibotemp > targettemp + offset ) and ("cool" == sensibomode):
+        print "Climate react [AC ON] Outside air {} Warmer than target {} temp plus offset {}".format(outsideTemp,targettemp,offset)
+	f.write ("Climate react [AC ON] Outside air {} Warmer than target {} temp plus offset {}\n".format(outsideTemp,targettemp,offset)        
         client.pod_change_ac_state(uid, ac_state, "on", True)
-	
-	#regular logic for fan control
+    if (False == power) and (outsideTemp < targettemp ) and (sensibotemp < targettemp - offset ) and ("heat" == sensibomode):
+        print "Climate react [Heat ON] Outside air {} Cooler than target {} temp less offset {}".format(outsideTemp,targettemp,offset)
+	f.write ("Climate react [Heat ON] Outside air {} Coller than target {} temp less offset {}\n".format(outsideTemp,targettemp,offset)        
+        client.pod_change_ac_state(uid, ac_state, "on", True)
+	 
+    #regular logic for fan control
     if ("cool" == sensibomode) :
       if (outsideTemp + offset < targettemp  ):
-        print "Cooling: Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp)
-        f.write ("Turning Off AC\n")
+        print "[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp)
+        f.write ("[AC Off] Outside air {} plus offset {} lower than target {} temp").format(outsideTemp,offset,targettemp)
         client.pod_change_ac_state(uid, ac_state, "on", False)
-      else:
-        print "Cooling: Outside air {} plus offset {}  higher than target {} temp".format(outsideTemp,offset,targettemp)
-        f.write ("Keep Cooling\n")
       if ("high" <> fanlevel) :
            if (sensibotemp > targettemp) :
              print "Fan is not high, Interior temp {} too high raising fan".format(sensibotemp)
-             client.pod_change_ac_state(uid, ac_state, "fanLevel", "high")
-             f.write ("Kicking up fan\n")
+             f.write ("Fan is not high, Interior temp {} too high raising fan\n").format(sensibotemp)
+             client.pod_change_ac_state(uid, ac_state, "fanLevel", "high")             
     else:  #Heating Mode
       if (outsideTemp > targettemp) :
-        print "Heating: Outside air {} higher than target {} temp".format(outsideTemp,targettemp)
-        client.pod_change_ac_state(uid, ac_state, "on", False)
-        f.write ("Turning Off Heat\n")
-      else:
-        print "Heating: Outside air {} lower than target {} temp".format(outsideTemp,targettemp)
-        f.write ("Keep Heating\n")
+        print "[Heat Off] Outside air {} higher than target {} temp".format(outsideTemp,targettemp)
+        f.write("[Heat Off] Outside air {} higher than target {} temp\n").format(outsideTemp,targettemp)
+        client.pod_change_ac_state(uid, ac_state, "on", False)        
+
       if ("high" <> fanlevel) :
            if (sensibotemp < targettemp ) :
              print "Fan is not high, Interior temp {} too low raising fan".format(sensibotemp)
-             client.pod_change_ac_state(uid, ac_state, "fanLevel", "high")
-             f.write ("Kicking up fan\n")
+             f.write ("Fan is not high, Interior temp {} too low raising fan\n").format(sensibotemp)
+             client.pod_change_ac_state(uid, ac_state, "fanLevel", "high")             
     if (outsideTemp < sensibotemp) :
       print "Inside {} hotter than Outside {}".format(sensibotemp,outsideTemp)
     else:
