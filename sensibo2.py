@@ -100,11 +100,11 @@ if __name__ == "__main__":
     #climate react logic
     if (False == power) and (outsideTemp > targettemp ) and (sensibotemp > targettemp + offset ) and ("cool" == sensibomode):
         print "Climate react [AC ON] Outside air {} Warmer than target {} temp plus offset {}".format(outsideTemp,targettemp,offset)
-	f.write ("Climate react [AC ON] Outside air {} Warmer than target {} temp plus offset {}\n".format(outsideTemp,targettemp,offset)        
+	f.write ("Climate react [AC ON] Outside air {} Warmer than target {} temp plus offset {}\n").format(outsideTemp,targettemp,offset)        
         client.pod_change_ac_state(uid, ac_state, "on", True)
     if (False == power) and (outsideTemp < targettemp ) and (sensibotemp < targettemp - offset ) and ("heat" == sensibomode):
         print "Climate react [Heat ON] Outside air {} Cooler than target {} temp less offset {}".format(outsideTemp,targettemp,offset)
-	f.write ("Climate react [Heat ON] Outside air {} Coller than target {} temp less offset {}\n".format(outsideTemp,targettemp,offset)        
+	f.write ("Climate react [Heat ON] Outside air {} Coller than target {} temp less offset {}\n").format(outsideTemp,targettemp,offset)        
         client.pod_change_ac_state(uid, ac_state, "on", True)
 	 
     #regular logic for fan control
