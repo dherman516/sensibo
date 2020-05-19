@@ -56,7 +56,7 @@ if __name__ == "__main__":
     parser.add_argument('apikey', type = str, help='Request an API Key from home.sensibo.com')
     parser.add_argument('deviceName', type = str, help='Your sensibo device name from home.sensibo.com')
     parser.add_argument('cityName', type = str, help='Name of the city you live in', default='Modiin')	
-    parser.add_argument('offset', type = type=int, help='number of degrees C offset from ambient to use', default=0)
+    parser.add_argument('offset', type = int, help='number of degrees C offset from ambient to use', default=0)
 
     args = parser.parse_args()
 
