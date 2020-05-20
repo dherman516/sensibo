@@ -10,15 +10,15 @@ Logs to /tmp/sensibo.txt
 
 Log looks like:
 
-2020-05-16 18:08:55
---------Devices---------
+2020-05-16 18:08:55\n
+--------Devices---------\n
 Devices {u'apartment': u'9eYvK8PQ'}
---------Temps---------
-Target Temp: 23
-Sensibo Power On: True Temp: 24.6 State: cool  Fan: high
-Outside Temp: 34.0C /93.2F
---------Analysis---------
-Keep Cooling
+--------Temps---------\n
+Target Temp: 23\n
+Sensibo Power On: True Temp: 24.6 State: cool  Fan: high\n
+Outside Temp: 34.0C /93.2F\n
+--------Analysis---------\n
+Keep Cooling\n
 
 
 turn off implemented for cases where
@@ -33,7 +33,7 @@ If interior temp is equal to target drop fan to low
 
 Sample command line
 
-Python sensibo.py [api key] [device name]
+Python sensibo.py [api key] [device name] [City Name] [Offset]
 
 Get api key from sensibo API page (https://home.sensibo.com/me/api)
 
