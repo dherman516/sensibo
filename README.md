@@ -10,15 +10,15 @@ Logs to /tmp/sensibo.txt
 
 Log looks like:
 
-2020-05-16 18:08:55\n
---------Devices---------\n
+2020-05-16 18:08:55
+--------Devices---------
 Devices {u'apartment': u'9eYvK8PQ'}
---------Temps---------\n
-Target Temp: 23\n
-Sensibo Power On: True Temp: 24.6 State: cool  Fan: high\n
-Outside Temp: 34.0C /93.2F\n
---------Analysis---------\n
-Keep Cooling\n
+--------Temps---------
+Target Temp: 23
+Sensibo Power On: True Temp: 24.6 State: cool  Fan: high
+Outside Temp: 34.0C /93.2F
+--------Analysis---------
+Keep Cooling
 
 
 turn off implemented for cases where
