@@ -62,6 +62,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     offset=args.offset
     cityName=args.cityName
+    offsetReact=args.offsetReact
 
     f = open("/tmp/sensibo.log","a+")
     f.write(timestamp + "\n")
