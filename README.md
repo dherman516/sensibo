@@ -30,7 +30,7 @@ Added logic if fan is not set to High and interior temp is +1 from target, raise
 If interior temp is equal to target drop fan to low
 
 Sample command line  
-Python sensibo.py [api key] [device name] [City Name] [Offset]  
+Python sensibo.py [api key] [device name] [City Name] [Offset] [React Offset]
 
 Get api key from sensibo API page (https://home.sensibo.com/me/api)
 get device name from home.sensibo.com, mine is "apartment"  
