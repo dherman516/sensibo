@@ -67,12 +67,18 @@ if __name__ == "__main__":
     f = open("/tmp/sensibo.log","a+")
     f.write(timestamp + "\n")
    
+    g = open("/tmp/sensibo.data.log","a+")
+    g.write(timestamp + ",")
+   
+    
+
     client = SensiboClientAPI(args.apikey)
     devices = client.devices()
     print "-" * 10, "devices", "-" * 10
     print devices
     f.write ("--------Devices---------\n")
     f.write ("Devices {} \n".format(devices))
+
 
    
     uid = devices[args.deviceName]
@@ -93,6 +99,8 @@ if __name__ == "__main__":
     sensibomode = ac_state['result'][0]['acState']['mode']
     fanlevel = ac_state['result'][0]['acState']['fanLevel']
     power = ac_state['result'][0]['acState']['on']
+
+    g.write ("{},{},{},{},{},{}\n",.format(power,sensibotemp,sensibomode,fanlevel,targettemp,outsideTemp))
     f.write ("--------Temps---------\n")
     f.write ("Target Temp: {}\n".format(targettemp))
     f.write ("Sensibo Power On: {} Temp: {} State: {}  Fan: {}\n".format(power,sensibotemp,sensibomode,fanlevel))
