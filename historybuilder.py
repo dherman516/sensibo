@@ -42,8 +42,10 @@ class SensiboClientAPI(object):
         return response.json()
 
     def pod_historical(self, podUid, days):
-        result = self._get("/pods/%s/historicalMeasurements %" % (podUid, days))
-        return result['result']
+        result = self._jget("/pods/%s/historicalMeasurements" % podUid, {'days': days})
+        response.raise_for_status()
+        return response.json()
+
 
     def pod_change_ac_state(self, podUid, currentAcState, propertyToChange, newValue):
         self._patch("/pods/%s/acStates/%s" % (podUid, propertyToChange),
