@@ -72,9 +72,6 @@ if __name__ == "__main__":
     devices = client.devices()
     print "-" * 10, "devices", "-" * 10
     print devices
-    f.write ("--------Devices---------\n")
-    f.write ("Devices {} \n".format(devices))
-
 
    
     uid = devices[args.deviceName]
