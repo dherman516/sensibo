@@ -41,9 +41,8 @@ class SensiboClientAPI(object):
         response.raise_for_status()
         return response.json()
 
-    def pod_historical(self, podUid, days):
-        payload = {'days': days}
-        result = self._jget("/pods/%s/historicalMeasurements" % podUid, payload)
+    def pod_historical(self, podUid, ndays):        
+        result = self._jget("/pods/%s/historicalMeasurements" % podUid, days="%d" % ndays)
         response.raise_for_status()
         return response.json()
 
