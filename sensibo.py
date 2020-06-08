@@ -100,7 +100,7 @@ if __name__ == "__main__":
     fanlevel = ac_state['result'][0]['acState']['fanLevel']
     power = ac_state['result'][0]['acState']['on']
 
-    g.write ("{},{},{},{},{},{}\n",.format(power,sensibotemp,sensibomode,fanlevel,targettemp,outsideTemp))
+    g.write ("{},{},{},{},{},{}\n".format(power,sensibotemp,sensibomode,fanlevel,targettemp,outsideTemp))
     f.write ("--------Temps---------\n")
     f.write ("Target Temp: {}\n".format(targettemp))
     f.write ("Sensibo Power On: {} Temp: {} State: {}  Fan: {}\n".format(power,sensibotemp,sensibomode,fanlevel))
