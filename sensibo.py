@@ -57,12 +57,17 @@ if __name__ == "__main__":
     parser.add_argument('deviceName', type = str, help='Your sensibo device name from home.sensibo.com')
     parser.add_argument('cityName', type = str, help='Name of the city you live in', default='Modiin')	
     parser.add_argument('offset', type = int, help='number of degrees C offset from ambient to use', default=0)
-    parser.add_argument('offsetReact', type = int, help='number of degrees C offset from ambient to use for climate react turn on', default=10)
+    parser.add_argument('ReactHot', type = int, help='Temp in C offset for trigger AC turn On', default=27)
+    parser.add_argument('ReactOff', type = int, help='Temp in C offset for trigger Climate Off ', default=22)
+    parser.add_argument('ReactCold', type = int, help='Temp in C offset for trigger Heat turn On', default=18)
 
     args = parser.parse_args()
     offset=args.offset
     cityName=args.cityName
-    offsetReact=args.offsetReact
+    
+    ReactHot=args.ReactHot
+    ReactOff=args.ReactOff
+    ReactCold=args.ReactCold
 
     f = open("/tmp/sensibo.log","a+")
     f.write(timestamp + "\n")
@@ -107,15 +112,28 @@ if __name__ == "__main__":
     f.write ("Outside Temp: {}C /{}F\n".format(outsideTemp,fahrenheit))
     f.write ("--------Analysis---------\n")
     
-    if (offsetReact > 0) :    #climate react logic
-      if (False == power) and (outsideTemp > targettemp ) and (sensibotemp > targettemp + offsetReact ) and ("cool" == sensibomode):
-        print "Climate react [AC ON] Outside air {} Warmer than target {} temp plus offset react {}".format(outsideTemp,targettemp,offsetReact)
-	f.write ("Climate react [AC ON] Outside air {} Warmer than target {} temp plus offset react {}\n".format(outsideTemp,targettemp,offsetReact))
+    if (False == power)) :    #climate react Onlogic
+      if  (outsideTemp > targettemp ) and (sensibotemp > ReactHot ) and ("cool" == sensibomode):
+        print "Climate react [AC ON] Outside air {} Warmer than target {} temp".format(outsideTemp,targettemp)
+	print "Climate react [AC ON] Inside air {} Warmer than target {} temp".format(sensibotemp,ReactHot)
+	f.write ("Climate react [AC ON] Outside air {} Warmer than target {} temp {}\n".format(outsideTemp,targettemp))
+	f.write ("Climate react [AC ON] Inside air {} Warmer than target {} temp {}\n".format(sensibotemp,ReactHot))
         client.pod_change_ac_state(uid, ac_state, "on", True)
-      if (False == power) and (outsideTemp < targettemp ) and (sensibotemp < targettemp - offsetReact ) and ("heat" == sensibomode):
-        print "Climate react [Heat ON] Outside air {} Cooler than target {} temp less offset react{}".format(outsideTemp,targettemp,offsetReact)
-	f.write ("Climate react [Heat ON] Outside air {} Coller than target {} temp less offset react{}\n".format(outsideTemp,targettemp,offsetReact))
+      if  (outsideTemp < targettemp ) and (sensibotemp < ReactCold ) and ("heat" == sensibomode):
+        print "Climate react [Heat ON] Outside air {} Colder than target {} temp".format(outsideTemp,targettemp)
+	print "Climate react [Heat ON] Inside air {} Colder than target {} temp".format(sensibotemp,ReactCold)
+	f.write ("Climate react [Heat ON] Outside air {} Colder than target {} temp {}\n".format(outsideTemp,targettemp))
+	f.write ("Climate react [Heat ON] Inside air {} Colder than target {} temp {}\n".format(sensibotemp,ReactCold))
         client.pod_change_ac_state(uid, ac_state, "on", True)
+    else:  #Power On Climate React Off
+      if  (sensibotemp < ReactOff ) and ("cool" == sensibomode):
+        print "Climate react [AC ON] Inside air {} Colder than target {} temp".format(sensibotemp,ReactOff)
+	f.write ("Climate react [AC ON] Inside air {} Colder than target {} temp {}\n".format(sensibotemp,ReactOff))
+        client.pod_change_ac_state(uid, ac_state, "on", False)
+      if  (sensibotemp > ReactOff ) and ("heat" == sensibomode):
+        print "Climate react [Heat ON] Inside air {} Warmer than target {} temp".format(sensibotemp,ReactOff)
+	f.write ("Climate react [Heat  ON] Inside air {} Warmer than target {} temp {}\n".format(sensibotemp,ReactOff))
+        client.pod_change_ac_state(uid, ac_state, "on", False)	
 	 
     #regular logic for fan control
     if ("cool" == sensibomode) :
