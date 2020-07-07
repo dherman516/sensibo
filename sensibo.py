@@ -112,7 +112,7 @@ if __name__ == "__main__":
     f.write ("Outside Temp: {}C /{}F\n".format(outsideTemp,fahrenheit))
     f.write ("--------Analysis---------\n")
     
-    if (False == power)) :    #climate react Onlogic
+    if (False == power) :    #climate react Onlogic
       if  (outsideTemp > targettemp ) and (sensibotemp > ReactHot ) and ("cool" == sensibomode):
         print "Climate react [AC ON] Outside air {} Warmer than target {} temp".format(outsideTemp,targettemp)
 	print "Climate react [AC ON] Inside air {} Warmer than target {} temp".format(sensibotemp,ReactHot)
