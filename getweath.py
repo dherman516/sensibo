@@ -1,9 +1,14 @@
 #Sample code to grab local weather (temp) and print it out
 
-import requests
+import requests,re
 r = requests.get('http://wttr.in/Modiin?format=%t')
 print r.text
-s = r.text[1:-3]
+temp = re.findall(r'\d+', r.text)
+res = list(map(int, temp))
+# print result
+print("The numbers list is : " + str(res))
+
+s = r.text[1:-2] #Change due to wttr change in output format
 print s
 celsius = float(s)
 fahrenheit = (celsius * 9/5) + 32
