@@ -115,15 +115,15 @@ if __name__ == "__main__":
     if (False == power) :    #climate react Onlogic
       if  (outsideTemp > targettemp ) and (sensibotemp > ReactHot ) and ("cool" == sensibomode):
         print "Climate react [AC ON] Outside air {} Warmer than target {} temp".format(outsideTemp,targettemp)
-	print "Climate react [AC ON] Inside air {} Warmer than target {} temp".format(sensibotemp,ReactHot)
+	print "Climate react [AC ON] Inside air {} Warmer than ClimateReact {} temp".format(sensibotemp,ReactHot)
 	f.write ("Climate react [AC ON] Outside air {} Warmer than target {} temp \n".format(outsideTemp,targettemp))
-	f.write ("Climate react [AC ON] Inside air {} Warmer than target {} temp \n".format(sensibotemp,ReactHot))
+	f.write ("Climate react [AC ON] Inside air {} Warmer than ClimateReact {} temp \n".format(sensibotemp,ReactHot))
         client.pod_change_ac_state(uid, ac_state, "on", True)
       if  (outsideTemp < targettemp ) and (sensibotemp < ReactCold ) and ("heat" == sensibomode):
         print "Climate react [Heat ON] Outside air {} Colder than target {} temp".format(outsideTemp,targettemp)
-	print "Climate react [Heat ON] Inside air {} Colder than target {} temp".format(sensibotemp,ReactCold)
+	print "Climate react [Heat ON] Inside air {} Colder than ClimateReact {} temp".format(sensibotemp,ReactCold)
 	f.write ("Climate react [Heat ON] Outside air {} Colder than target {} temp \n".format(outsideTemp,targettemp))
-	f.write ("Climate react [Heat ON] Inside air {} Colder than target {} temp\n".format(sensibotemp,ReactCold))
+	f.write ("Climate react [Heat ON] Inside air {} Colder than ClimateReact {} temp\n".format(sensibotemp,ReactCold))
         client.pod_change_ac_state(uid, ac_state, "on", True)
     else:  #Power On Climate React Off
       if  (sensibotemp < ReactOff ) and ("cool" == sensibomode):
