@@ -95,7 +95,7 @@ if __name__ == "__main__":
 #    Sensibo moved nativeTargetTemperature out of the acstate structure into device/acstate
 #    print ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
     r = requests.get('http://wttr.in/' + cityName + '?format=%t')
-    s = r.text[1:-3]
+    s = r.text[1:-2]
     outsideTemp = float(s)
     fahrenheit = (outsideTemp * 9/5) + 32
 
