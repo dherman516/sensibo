@@ -57,9 +57,10 @@ if __name__ == "__main__":
     parser.add_argument('deviceName', type = str, help='Your sensibo device name from home.sensibo.com')
     parser.add_argument('cityName', type = str, help='Name of the city you live in', default='Modiin')	
     parser.add_argument('offset', type = int, help='number of degrees C offset from ambient to use', default=0)
-    parser.add_argument('ReactHot', type = int, help='Temp in C offset for trigger AC turn On', default=27)
-    parser.add_argument('ReactOff', type = int, help='Temp in C offset for trigger Climate Off ', default=22)
-    parser.add_argument('ReactCold', type = int, help='Temp in C offset for trigger Heat turn On', default=18)
+    parser.add_argument('ReactHot', type = int, help='Temp in C for trigger AC turn On', default=27)
+    parser.add_argument('ReactOff', type = int, help='Temp in C for trigger Climate Off ', default=22)
+    parser.add_argument('ReactCold', type = int, help='Temp in C  for trigger Heat turn On', default=18)
+    parser.add_argument('ReactHotAdjust', type = int, help='Temp in C offset for Dynamic Temp set', default=0)
 
     args = parser.parse_args()
     offset=args.offset
@@ -68,7 +69,8 @@ if __name__ == "__main__":
     ReactHot=args.ReactHot
     ReactOff=args.ReactOff
     ReactCold=args.ReactCold
-
+    ReactHotAdjust=args.ReactHotAdjust
+	
     f = open("/tmp/sensibo.log","a+")
     f.write(timestamp + "\n")
    
@@ -137,11 +139,22 @@ if __name__ == "__main__":
 	 
     #regular logic for fan control
     if ("cool" == sensibomode) :
-      if (outsideTemp + offset < targettemp  ):
-        print "[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp)
-        f.write ("[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp))
-        client.pod_change_ac_state(uid, ac_state, "on", False)
-      if ("high" <> fanlevel) :
+      if (ReactHotAdjust <> 0):
+	if (outsideTemp  < targettemp) and (sensibotemp > targettemp):
+          print "[AC Temp Adjust] Outside air {}  lower than target {} temp".format(outsideTemp,targettemp)
+          f.write ("[AC Temp Adjust] Outside air {}  lower than target {} temp".format(outsideTemp,targettemp))
+          print "[AC Temp Adjust] Inside air {}  Greater than target {} temp".format(sensibotemp,targettemp)
+          f.write ("[AC Temp Adjust] Inside air {} Greater than target {} temp".format(sensibotemp,targettemp))
+	  #Lower target temp to outside temp - 1	
+          client.pod_change_ac_state(uid, ac_state, "on", False)
+		
+		
+      else:
+        if (outsideTemp + offset < targettemp  ):
+          print "[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp)
+          f.write ("[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp))
+          client.pod_change_ac_state(uid, ac_state, "on", False)
+        if ("high" <> fanlevel) :
            if (sensibotemp > targettemp) :
              print "Fan is not high, Interior temp {} too high raising fan".format(sensibotemp)
              f.write ("Fan is not high, Interior temp {} too high raising fan\n".format(sensibotemp))
