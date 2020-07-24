@@ -157,7 +157,8 @@ if __name__ == "__main__":
 	f.write ("Outside react [Lower Temp] Outside air {} Warmer than target {} temp \n".format(outsideTemp,targettemp))
 	f.write ("Outside react [Lower Temp] Inside air {} Warmer than ClimateReact {} temp \n".format(sensibotemp,ReactHot))
         #Change temp to OusideTemp - 1
-	#client.pod_change_ac_state(uid, ac_state, "on", True)
+	client.pod_change_ac_state(uid, ac_state, "targetTemperature", targettemp - 1)
+  
 
 
 
