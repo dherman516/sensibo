@@ -96,10 +96,10 @@ if __name__ == "__main__":
 #    client.pod_change_ac_state(uid, ac_state, "on", not ac_state['on'])
 #    Sensibo moved nativeTargetTemperature out of the acstate structure into device/acstate
 #    print ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
-
-     weather = requests.get('https://api.openweathermap.org/data/2.5/onecall?lat=31.9073&lon=34.999&units=metric&exclude=hourly,daily&appid=' + weathAPIkey)
-     outsideTemp = weather['current']['temp']
-     fahrenheit = (outsideTemp * 9/5) + 32
+    url = 'https://api.openweathermap.org/data/2.5/onecall?lat=31.9073&lon=34.999&units=metric&exclude=hourly,daily&appid=' + weathAPIkey
+    weather = requests.get(url)
+    outsideTemp = weather['current']['temp']
+    fahrenheit = (outsideTemp * 9/5) + 32
 
 #    r = requests.get('http://wttr.in/' + cityName + '?format=%t')
 #    s = r.text[1:-2]
