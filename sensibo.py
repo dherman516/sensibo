@@ -54,6 +54,7 @@ if __name__ == "__main__":
    
     parser = argparse.ArgumentParser(description='Sensibo client parser')
     parser.add_argument('apikey', type = str, help='Request an API Key from home.sensibo.com')
+    parser.add_argument('apikey2', type = str, help='Request an API Key from http://api.openweathermap.org/')
     parser.add_argument('deviceName', type = str, help='Your sensibo device name from home.sensibo.com')
     parser.add_argument('cityName', type = str, help='Name of the city you live in', default='Modiin')	
     parser.add_argument('offset', type = int, help='number of degrees C offset from ambient to use', default=0)
@@ -78,6 +79,7 @@ if __name__ == "__main__":
     
 
     client = SensiboClientAPI(args.apikey)
+    weathAPIkey = args.apikey2
     devices = client.devices()
     print "-" * 10, "devices", "-" * 10
     print devices
@@ -94,10 +96,15 @@ if __name__ == "__main__":
 #    client.pod_change_ac_state(uid, ac_state, "on", not ac_state['on'])
 #    Sensibo moved nativeTargetTemperature out of the acstate structure into device/acstate
 #    print ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
-    r = requests.get('http://wttr.in/' + cityName + '?format=%t')
-    s = r.text[1:-2]
-    outsideTemp = float(s)
-    fahrenheit = (outsideTemp * 9/5) + 32
+
+     weather = requests.get('https://api.openweathermap.org/data/2.5/onecall?lat=31.9073&lon=34.999&units=metric&exclude=hourly,daily&appid=' + weathAPIkey)
+     outsideTemp = weather['current']['temp']
+     fahrenheit = (outsideTemp * 9/5) + 32
+
+#    r = requests.get('http://wttr.in/' + cityName + '?format=%t')
+#    s = r.text[1:-2]
+#    outsideTemp = float(s)
+#    fahrenheit = (outsideTemp * 9/5) + 32
 
     targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
     sensibotemp= ac_state['result'][0]['device']['measurements']['temperature']
