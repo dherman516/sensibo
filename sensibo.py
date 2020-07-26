@@ -56,7 +56,8 @@ if __name__ == "__main__":
     parser.add_argument('apikey', type = str, help='Request an API Key from home.sensibo.com')
     parser.add_argument('apikey2', type = str, help='Request an API Key from http://api.openweathermap.org/')
     parser.add_argument('deviceName', type = str, help='Your sensibo device name from home.sensibo.com')
-    parser.add_argument('cityName', type = str, help='Name of the city you live in', default='Modiin')	
+    parser.add_argument('cityLat', type = str, help='Lattitude of the city you live in')
+    parser.add_argument('cityLon', type = str, help='Longitude of the city you live in')
     parser.add_argument('offset', type = int, help='number of degrees C offset from ambient to use', default=0)
     parser.add_argument('ReactHot', type = int, help='Temp in C offset for trigger AC turn On', default=27)
     parser.add_argument('ReactOff', type = int, help='Temp in C offset for trigger Climate Off ', default=22)
@@ -64,8 +65,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     offset=args.offset
-    cityName=args.cityName
-    
+    cityLat=args.cityLat
+    cityLon=args.cityLon
     ReactHot=args.ReactHot
     ReactOff=args.ReactOff
     ReactCold=args.ReactCold
@@ -96,7 +97,7 @@ if __name__ == "__main__":
 #    client.pod_change_ac_state(uid, ac_state, "on", not ac_state['on'])
 #    Sensibo moved nativeTargetTemperature out of the acstate structure into device/acstate
 #    print ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
-    url = 'https://api.openweathermap.org/data/2.5/onecall?lat=31.9073&lon=34.999&units=metric&exclude=hourly,daily&appid=' + weathAPIkey
+    url = 'https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=metric&exclude=hourly,daily&appid=' + weathAPIkey
     response = requests.get(url)
     response.raise_for_status()
     weather = response.json()
