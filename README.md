@@ -30,7 +30,7 @@ Added logic if fan is not set to High and interior temp is +1 from target, raise
 If interior temp is equal to target drop fan to low
 
 Sample command line  
-Python sensibo.py [api key] [Weather Api Key] [device name] [City Name] [Offset] [React Temp Hot] [React Temp Off] [React Temp Cold]
+Python sensibo.py [api key] [Weather Api Key] [device name] [City NLattitude] [City Longitude] [Offset] [React Temp Hot] [React Temp Off] [React Temp Cold]
 
 Get Weather Api Key from (https://openweathermap.org/api/one-call-api)
 
