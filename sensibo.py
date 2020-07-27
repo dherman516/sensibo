@@ -142,10 +142,10 @@ if __name__ == "__main__":
 #    fahrenheit = (outsideTemp * 9/5) + 32
 
 
-    g.write ("{},{},{},{},{},{},{}\n".format(power,sensibotemp,sensibomode,fanlevel,targettemp,outsideTemp,RealFeel))
+    g.write ("{},{},{},{},{},{},{}\n".format(power,sensibotemp,sensibomode,fanlevel,targettemp,outsideTemp,RealFeel,sensibohumidity))
     f.write ("--------Temps---------\n")
     f.write ("Target Temp: {}\n".format(targettemp))
-    f.write ("Sensibo Power On: {} Temp: {} RealFeel: {} State: {}  Fan: {}\n".format(power,sensibotemp,RealFeel,sensibomode,fanlevel))
+    f.write ("Sensibo Power On: {} Temp: {} Humidity: {}% RealFeel: {} State: {}  Fan: {}\n".format(power,sensibotemp,RealFeel,sensibohumidity,sensibomode,fanlevel))
     f.write ("Outside Temp: {}C /{}F\n".format(outsideTemp,fahrenheit))
     f.write ("--------Analysis---------\n")
     
