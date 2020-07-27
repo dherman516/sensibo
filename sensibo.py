@@ -119,7 +119,7 @@ if __name__ == "__main__":
     # temperature of 35F, wind speed of 10mph, and relative humidity of 72% yields a "feels like" value of 27.4F
     vTemperature = float(fahrenheit)
     vRelativeHumidity = float(sensibohumidity)
-
+    vFeelsLike = vTemperature
  
     # Replace it with the Heat Index, if necessary
     if vFeelsLike == vTemperature and vTemperature >= 80:
