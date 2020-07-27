@@ -119,7 +119,8 @@ if __name__ == "__main__":
     # create input temperature in different units
     t = Temp(sensibotemp, 'c')  # c - celsius, f - fahrenheit, k - kelvin
     # calculate Heat Index
-    RealFeel = heat_index(temperature=t, humidity=sensibohumidity)
+    tRealFeel = heat_index(temperature=t, humidity=sensibohumidity)
+    RealFeel = tRealfeel.c
 
 
 #    r = requests.get('http://wttr.in/' + cityName + '?format=%t')
