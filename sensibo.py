@@ -167,8 +167,8 @@ if __name__ == "__main__":
         client.pod_change_ac_state(uid, ac_state, "on", False)
       if ("high" <> fanlevel) :
            if (RealFeel > targettemp) :
-             print "Fan is not high, Interior temp {} too high raising fan".format(RealFeel)
-             f.write ("Fan is not high, Interior temp {} too high raising fan\n".format(RealFeel))
+             print "Fan is not high, Interior temp {:.2f} too high raising fan".format(RealFeel)
+             f.write ("Fan is not high, Interior temp {:.2f} too high raising fan\n".format(RealFeel))
              client.pod_change_ac_state(uid, ac_state, "fanLevel", "high")             
     else:  #Heating Mode
       if (outsideTemp > targettemp) :
@@ -178,13 +178,13 @@ if __name__ == "__main__":
 
       if ("high" <> fanlevel) :
            if (RealFeel < targettemp ) :
-             print "Fan is not high, Interior temp {} too low raising fan".format(RealFeel)
-             f.write ("Fan is not high, Interior temp {} too low raising fan\n".format(RealFeel))
+             print "Fan is not high, Interior temp {:.2f} too low raising fan".format(RealFeel)
+             f.write ("Fan is not high, Interior temp {:.2f} too low raising fan\n".format(RealFeel))
              client.pod_change_ac_state(uid, ac_state, "fanLevel", "high")             
     if (outsideTemp < RealFeel) :
-      print "Inside {} hotter than Outside {}".format(RealFeel,outsideTemp)
+      print "Inside {:.2f} hotter than Outside {}".format(RealFeel,outsideTemp)
     else:
-      print "Outside {} hotter than Inside {}".format(outsideTemp,RealFeel)
+      print "Outside {} hotter than Inside {:.2f}".format(outsideTemp,RealFeel)
     if (RealFeel == targettemp) :
         print "Target Temp {} reached. Reducing Fan".format(targettemp)
         client.pod_change_ac_state(uid, ac_state, "fanLevel", "low")
