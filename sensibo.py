@@ -108,7 +108,7 @@ if __name__ == "__main__":
 #    Sensibo moved nativeTargetTemperature out of the acstate structure into device/acstate
 #    print ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
 
-    url = 'https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=metric&exclude=hourly,daily&appid=' + weathAPIkey
+    url = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLat + '&lon=' + cityLon + '&units=metric&exclude=hourly,daily&appid=' + weathAPIkey
     response = requests.get(url)
     response.raise_for_status()
     weather = response.json()
