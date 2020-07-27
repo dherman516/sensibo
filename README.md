@@ -4,6 +4,8 @@ https://sensibo.github.io/
 
 Requirements:
 requests: http://www.python-requests.org/en/latest/
+Meteocalc: https://pypi.org/project/meteocalc/   pip install meteocalc
+
 # sensibo
 
 Logs to /tmp/sensibo.txt
