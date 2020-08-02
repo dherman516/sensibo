@@ -97,7 +97,7 @@ if __name__ == "__main__":
 	
 
     #targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
-    targettemp = ac_state['result'][0]['device']['acState']['TargetTemperature']
+    targettemp = ac_state['result'][0]['device']['acState']['targetTemperature']
     sensibotemp= ac_state['result'][0]['device']['measurements']['temperature']
     sensibohumidity= ac_state['result'][0]['device']['measurements']['humidity']
     sensibomode = ac_state['result'][0]['acState']['mode']
