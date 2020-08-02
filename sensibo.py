@@ -98,11 +98,17 @@ if __name__ == "__main__":
 
     #targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
     targettemp = ac_state['result'][0]['device']['acState']['targetTemperature']
+    targettempUnit = ac_state['result'][0]['device']['acState']['temperatureUnit']
     sensibotemp= ac_state['result'][0]['device']['measurements']['temperature']
     sensibohumidity= ac_state['result'][0]['device']['measurements']['humidity']
     sensibomode = ac_state['result'][0]['acState']['mode']
     fanlevel = ac_state['result'][0]['acState']['fanLevel']
     power = ac_state['result'][0]['acState']['on']	
+
+    if (targettempUnit == "F"):
+       targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
+	
+	
 	
 #    print ac_state
 #    print(json.dumps(ac_state, indent=4, sort_keys=True))
