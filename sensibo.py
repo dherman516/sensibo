@@ -96,7 +96,8 @@ if __name__ == "__main__":
     print "-" * 10, "AC State of %s" % args.deviceName, "_" * 10
 	
 
-    targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
+    #targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
+    targettemp = ac_state['result'][0]['device']['acState']['TargetTemperature']
     sensibotemp= ac_state['result'][0]['device']['measurements']['temperature']
     sensibohumidity= ac_state['result'][0]['device']['measurements']['humidity']
     sensibomode = ac_state['result'][0]['acState']['mode']
@@ -134,6 +135,13 @@ if __name__ == "__main__":
     f.write ("Target Temp: {}\n".format(targettemp))
     f.write ("Sensibo Power On: {} Temp: {} Humidity: {:.2f} % RealFeel: {:.2f} State: {}  Fan: {}\n".format(power,sensibotemp,sensibohumidity,RealFeel,sensibomode,fanlevel))
     f.write ("Outside Temp: {}C /{}F\n".format(outsideTemp,fahrenheit))
+	
+    print "--------Temps---------\n"
+    print "Target Temp: {}\n".format(targettemp)
+    print "Sensibo Power On: {} Temp: {} Humidity: {:.2f} % RealFeel: {:.2f} State: {}  Fan: {}\n".format(power,sensibotemp,sensibohumidity,RealFeel,sensibomode,fanlevel)
+    print "Outside Temp: {}C /{}F\n".format(outsideTemp,fahrenheit)
+	
+	
     f.write ("--------Analysis---------\n")
     
     if (False == power) :    #climate react Onlogic
