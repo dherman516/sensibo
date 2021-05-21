@@ -209,5 +209,3 @@ if __name__ == "__main__":
         print "Target Temp {} reached. Reducing Fan".format(targettemp)
         client.pod_change_ac_state(uid, ac_state, "fanLevel", "low")
         f.write ("Target Temp reached reducing fan\n")
-  
-
