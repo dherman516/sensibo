@@ -9,7 +9,7 @@ def to_fahrenheit(refTemp):
     return (refTemp * 9/5) + 32
 
 def to_celcius(refTemp):
-    return (refTemp − 32) * 5/9
+    return (refTemp - 32)  * 5 / 9
 
 class SensiboClientAPI(object):
     def __init__(self, api_key):
