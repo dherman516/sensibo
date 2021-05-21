@@ -5,6 +5,12 @@ from meteocalc import Temp, dew_point, heat_index, wind_chill, feels_like
 
 _SERVER = 'https://home.sensibo.com/api/v2'
 
+def to_fahrenheit(refTemp):
+    return (refTemp * 9/5) + 32
+
+def to_celcius(refTemp):
+    return (refTemp − 32) × 5/9
+
 class SensiboClientAPI(object):
     def __init__(self, api_key):
         self._api_key = api_key
@@ -140,12 +146,12 @@ if __name__ == "__main__":
     f.write ("--------Temps---------\n")
     f.write ("Target Temp: {} {}\n".format(targettemp, (targettemp * 9/5) + 32))
     f.write ("Sensibo Power On: {} Temp: {} Humidity: {:.2f} % RealFeel: {:.2f} State: {}  Fan: {}\n".format(power,sensibotemp,sensibohumidity,RealFeel,sensibomode,fanlevel))
-    f.write ("Outside Temp: {}C /{}F\n".format(outsideTemp,fahrenheit))
+    f.write ("Outside Temp: {}C /{}F\n".format(outsideTemp,to_fahrenheit(outsideTemp))
 	
     print "--------Temps---------\n"
     print "Target Temp: {} {}\n".format(targettemp, (targettemp * 9/5) + 32)
     print "Sensibo Power On: {} Temp: {} Humidity: {:.2f} % RealFeel: {:.2f} State: {}  Fan: {}\n".format(power,sensibotemp,sensibohumidity,RealFeel,sensibomode,fanlevel)
-    print "Outside Temp: {}C /{}F\n".format(outsideTemp,fahrenheit)
+    print "Outside Temp: {}C /{}F\n".format(outsideTemp,to_fahrenheit(outsideTemp))
 	
 	
     f.write ("--------Analysis---------\n")
