@@ -144,12 +144,12 @@ if __name__ == "__main__":
 
     g.write ("{},{},{},{},{},{:.2f},{:.2f},{:.2f}\n".format(power,sensibotemp,sensibomode,fanlevel,targettemp,outsideTemp,RealFeel,sensibohumidity))
     f.write ("--------Temps---------\n")
-    f.write ("Target Temp: {} {}\n".format(targettemp, (targettemp * 9/5) + 32))
+    f.write ("Target Temp: {} {}\n".format(targettemp, to_fahrenheit(targettemp))
     f.write ("Sensibo Power On: {} Temp: {} Humidity: {:.2f} % RealFeel: {:.2f} State: {}  Fan: {}\n".format(power,sensibotemp,sensibohumidity,RealFeel,sensibomode,fanlevel))
     f.write ("Outside Temp: {}C /{}F\n".format(outsideTemp,to_fahrenheit(outsideTemp))
 	
     print "--------Temps---------\n"
-    print "Target Temp: {} {}\n".format(targettemp, (targettemp * 9/5) + 32)
+    print "Target Temp: {} {}\n".format(targettemp, to_fahrenheit(targettemp))
     print "Sensibo Power On: {} Temp: {} Humidity: {:.2f} % RealFeel: {:.2f} State: {}  Fan: {}\n".format(power,sensibotemp,sensibohumidity,RealFeel,sensibomode,fanlevel)
     print "Outside Temp: {}C /{}F\n".format(outsideTemp,to_fahrenheit(outsideTemp))
 	
