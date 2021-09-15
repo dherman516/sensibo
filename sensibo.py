@@ -163,24 +163,28 @@ if __name__ == "__main__":
 	f.write ("Climate react [AC ON] Outside air {} Warmer than target {} temp \n".format(outsideTemp,targettemp))
 	f.write ("Climate react [AC ON] Inside air {} Warmer than ClimateReact {} temp \n".format(RealFeel,ReactHot))
         client.pod_change_ac_state(uid, ac_state, "on", True)
+	power = True
       if  (outsideTemp < targettemp ) and (sensibotemp < ReactCold ) and ("heat" == sensibomode):
         print "Climate react [Heat ON] Outside air {} Colder than target {} temp".format(outsideTemp,targettemp)
 	print "Climate react [Heat ON] Inside air {} Colder than ClimateReact {} temp".format(RealFeel,ReactCold)
 	f.write ("Climate react [Heat ON] Outside air {} Colder than target {} temp \n".format(outsideTemp,targettemp))
 	f.write ("Climate react [Heat ON] Inside air {} Colder than ClimateReact {} temp\n".format(RealFeel,ReactCold))
         client.pod_change_ac_state(uid, ac_state, "on", True)
+	power = True
     else:  #Power On Climate React Off
       if  (sensibotemp < ReactOff ) and ("cool" == sensibomode):
         print "Climate react [AC ON] Inside air {} Colder than target {} temp".format(RealFeel,ReactOff)
 	f.write ("Climate react [AC ON] Inside air {} Colder than target {} temp {}\n".format(RealFeel,ReactOff))
         client.pod_change_ac_state(uid, ac_state, "on", False)
+	power = False
       if  (sensibotemp > ReactOff ) and ("heat" == sensibomode):
         print "Climate react [Heat ON] Inside air {} Warmer than target {} temp".format(sensibotemp,ReactOff)
 	f.write ("Climate react [Heat  ON] Inside air {} Warmer than target {} temp {}\n".format(sensibotemp,ReactOff))
         client.pod_change_ac_state(uid, ac_state, "on", False)	
+	power = False
 	 
     #regular logic for fan control
-    if ("cool" == sensibomode) :
+    if ("cool" == sensibomode) and (power == True):
       if (outsideTemp + offset < targettemp  ):
         print "[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp)
         f.write ("[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp))
@@ -205,7 +209,7 @@ if __name__ == "__main__":
     else:
       print "Outside {} hotter than Inside {:.2f}".format(outsideTemp,RealFeel)
 #Below has never happened
-    if (RealFeel == targettemp) :
+    if (RealFeel == targettemp) and (power == True):
         print "Target Temp {} reached. Reducing Fan".format(targettemp)
         client.pod_change_ac_state(uid, ac_state, "fanLevel", "low")
         f.write ("Target Temp reached reducing fan\n")
