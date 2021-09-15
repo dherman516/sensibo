@@ -184,26 +184,27 @@ if __name__ == "__main__":
 	power = False
 	 
     #regular logic for fan control
-    if ("cool" == sensibomode) and (power == True):
-      if (outsideTemp + offset < targettemp  ):
-        print "[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp)
-        f.write ("[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp))
-        client.pod_change_ac_state(uid, ac_state, "on", False)
-      if (RealFeel > targettemp) :
-	if ("auto" <> fanlevel) :          
-             print "Fan is not Auto, Interior temp {:.2f} too high raising fan".format(RealFeel)
-             f.write ("Fan is not Auto, Interior temp {:.2f} too high raising fan\n".format(RealFeel))
-             client.pod_change_ac_state(uid, ac_state, "fanLevel", "auto")             
-    else:  #Heating Mode
-      if (outsideTemp > targettemp) :
-        print "[Heat Off] Outside air {} higher than target {} temp".format(outsideTemp,targettemp)
-        f.write("[Heat Off] Outside air {} higher than target {} temp\n".format(outsideTemp,targettemp))
-        client.pod_change_ac_state(uid, ac_state, "on", False)        
-      if (RealFeel < targettemp ) :
-        if ("auto" <> fanlevel) :
-             print "Fan is not auto, Interior temp {:.2f} too low raising fan".format(RealFeel)
-             f.write ("Fan is not auto, Interior temp {:.2f} too low raising fan\n".format(RealFeel))
-             client.pod_change_ac_state(uid, ac_state, "fanLevel", "auto")             
+    if (power == True):
+      if ("cool" == sensibomode):
+        if (outsideTemp + offset < targettemp  ):
+          print "[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp)
+          f.write ("[AC Off] Outside air {} plus offset {} lower than target {} temp".format(outsideTemp,offset,targettemp))
+          client.pod_change_ac_state(uid, ac_state, "on", False)
+        if (RealFeel > targettemp) :
+          if ("auto" <> fanlevel) :          
+               print "Fan is not Auto, Interior temp {:.2f} too high raising fan".format(RealFeel)
+               f.write ("Fan is not Auto, Interior temp {:.2f} too high raising fan\n".format(RealFeel))
+               client.pod_change_ac_state(uid, ac_state, "fanLevel", "auto")             
+      else:  #Heating Mode
+        if (outsideTemp > targettemp) :
+          print "[Heat Off] Outside air {} higher than target {} temp".format(outsideTemp,targettemp)
+          f.write("[Heat Off] Outside air {} higher than target {} temp\n".format(outsideTemp,targettemp))
+          client.pod_change_ac_state(uid, ac_state, "on", False)        
+        if (RealFeel < targettemp ) :
+          if ("auto" <> fanlevel) :
+               print "Fan is not auto, Interior temp {:.2f} too low raising fan".format(RealFeel)
+               f.write ("Fan is not auto, Interior temp {:.2f} too low raising fan\n".format(RealFeel))
+               client.pod_change_ac_state(uid, ac_state, "fanLevel", "auto")             
     if (outsideTemp < RealFeel) :
       print "Inside {:.2f} hotter than Outside {}".format(RealFeel,outsideTemp)
     else:
