@@ -66,10 +66,10 @@ if __name__ == "__main__":
     parser.add_argument('deviceName', type = str, help='Your sensibo device name from home.sensibo.com')
     parser.add_argument('cityLat', type = str, help='Lattitude of the city you live in')
     parser.add_argument('cityLon', type = str, help='Longitude of the city you live in')
-    parser.add_argument('offset', type = int, help='number of degrees C offset from ambient to use', default=0)
-    parser.add_argument('ReactHot', type = int, help='Temp in C offset for trigger AC turn On', default=27)
-    parser.add_argument('ReactOff', type = int, help='Temp in C offset for trigger Climate Off ', default=22)
-    parser.add_argument('ReactCold', type = int, help='Temp in C offset for trigger Heat turn On', default=18)
+    parser.add_argument('offset', type = float, help='number of degrees C offset from ambient to use', default=0)
+    parser.add_argument('ReactHot', type = float, help='Temp in C offset for trigger AC turn On', default=27)
+    parser.add_argument('ReactOff', type = float, help='Temp in C offset for trigger Climate Off ', default=22)
+    parser.add_argument('ReactCold', type = float, help='Temp in C offset for trigger Heat turn On', default=18)
 
     args = parser.parse_args()
     offset=args.offset
