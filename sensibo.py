@@ -91,7 +91,7 @@ if __name__ == "__main__":
     weathAPIkey = args.apikey2
     devices = client.devices()
     print  ("--------Devices---------")
-    print devices
+    print (devices)
     f.write ("--------Devices---------\n")
     f.write ("Devices {} \n".format(devices))
 
