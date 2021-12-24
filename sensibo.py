@@ -200,7 +200,7 @@ if __name__ == "__main__":
         if (sensibotemp > ReactOff) and ("heat" == sensibomode):
             print("Climate react [Heat ON] Inside air {} Warmer than target {} temp".format(
                 sensibotemp, ReactOff))
-            f.write("Climate react [Heat  ON] Inside air {} Warmer than target {} temp {}\n".format(
+            f.write("Climate react [Heat  ON] Inside air {} Warmer than target {} temp\n".format(
                 sensibotemp, ReactOff))
             client.pod_change_ac_state(uid, ac_state, "on", False)
             power = False
