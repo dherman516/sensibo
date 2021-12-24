@@ -99,7 +99,7 @@ if __name__ == "__main__":
    
     uid = devices[args.deviceName]
     ac_state = client.pod_ac_state(uid)
-    print "-" * 10, "AC State of %s" % args.deviceName, "_" * 10
+    print ("-------------AC State of %s -------------" % args.deviceName)
 	
 
     #targettemp = ac_state['result'][0]['device']['acState']['nativeTargetTemperature']
