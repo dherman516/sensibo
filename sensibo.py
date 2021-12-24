@@ -90,7 +90,7 @@ if __name__ == "__main__":
     client = SensiboClientAPI(args.apikey)
     weathAPIkey = args.apikey2
     devices = client.devices()
-    print "-" * 10, "devices", "-" * 10
+    print  ("--------Devices---------")
     print devices
     f.write ("--------Devices---------\n")
     f.write ("Devices {} \n".format(devices))
