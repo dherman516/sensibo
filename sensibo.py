@@ -197,11 +197,11 @@ if __name__ == "__main__":
                 RealFeel, ReactOff))
             client.pod_change_ac_state(uid, ac_state, "on", False)
             power = False
-        if (sensibotemp > ReactOff) and ("heat" == sensibomode):
+        if (sensibotemp > targettemp) and ("heat" == sensibomode):
             print("Climate react [Heat ON] Inside air {} Warmer than target {} temp".format(
-                sensibotemp, ReactOff))
+                sensibotemp, targettemp))
             f.write("Climate react [Heat  ON] Inside air {} Warmer than target {} temp\n".format(
-                sensibotemp, ReactOff))
+                sensibotemp, targettemp))
             client.pod_change_ac_state(uid, ac_state, "on", False)
             power = False
 
